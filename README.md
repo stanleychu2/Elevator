@@ -1,3 +1,6 @@
 # Elevator
-- 電梯裡的人不是以時間按照順序送人，但樓層的人是按照順序送人
-- 目前是電梯里是空的時候或樓層頂的時候不同方向的才能進來
+### 程式需求
+- ruby 2.5.1p57
+- Shoes
+
+[![Ruby](./img/ruby.png)](https://www.ruby-lang.org/zh_tw/)
