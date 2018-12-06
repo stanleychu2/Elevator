@@ -1,3 +1,19 @@
+def poisson(mean)	
+	l = Math.exp(-mean)
+	k = 0
+	p = 1.0
+
+	loop do
+		p = p*rand
+		k+=1
+		if p <= l
+			break			
+		end
+	end
+
+	return k - 1
+end
+
 def create_passenger(elevator)
 	loop do
 		# puts("main: #{Thread.list[0].status}\npassengger: #{Thread.list[1].status}\nelevator: #{Thread.list[2].status}")
@@ -15,7 +31,7 @@ def create_passenger(elevator)
 		puts(direction == UP ? "--->\n\n" : "<---\n\n")
 		command = FloorCall.new(from, direction)
 		elevator.add_command(command)
-		sleep(rand(8) + 1)
-		# sleep(3)
+		# 普法松隨機變數以 4 為平均去產生客人等待時間
+		sleep(poisson(4))
 	end
 end
