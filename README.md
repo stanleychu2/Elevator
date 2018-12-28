@@ -1,6 +1,6 @@
 # Elevator
 ### 程式需求
-- ruby 2.5.1p57
-- Shoes
+- Python3.7
+- Tkinter
 
-[![Ruby](./img/ruby.png)](https://www.ruby-lang.org/zh_tw/)
+[![Ruby](./img/python.png)](https://www.python.org)
