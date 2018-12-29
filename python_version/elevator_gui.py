@@ -1,5 +1,7 @@
 from elevator import *
 from PIL import Image, ImageTk
+from functools import partial
+import pygame as pg
 
 class app(Tk):
 
@@ -57,6 +59,9 @@ class StartPage(Frame):
     def __init__(self, parent, controller,image):
         Frame.__init__(self,parent)
 
+        music = set_music("music/1.mp3",0.6)
+        music.music.play()
+        
         background_label = Label(self,image=image[5])
         background_label.place(x=0,y=0)
 
@@ -67,8 +72,12 @@ class StartPage(Frame):
                             command=lambda: controller.show_frame(PageOne))
         button.place(x=450,y=370)
 
+        def Exit():
+            music.music.pause()
+            controller.show_frame(PageTwo)
+
         button2 = Button(self, text="EXIT",font=("Verdana", 30),width=10,bg='orange',
-                            command=lambda: controller.show_frame(PageTwo))
+                            command=lambda: Exit())
         button2.place(x=450,y=470)
 
 #############################################################################################################
@@ -113,11 +122,11 @@ class PageOne(Frame):
 
         floor_num = [None for i in range(6)]
         for i in range(3) :
-            num = Label(left, text=str(i + 1 + i * 1), font=("Local baseball park", 40), borderwidth = 3, relief="solid")
+            num = Label(left, text=str(i + 1 + i * 1), font=("Local baseball park", 40), borderwidth = 3, relief="solid",bg= 'white')
             num.pack(side=TOP, padx=20, pady=20, ipadx=35, ipady=20)
             floor_num[2 * i] = num
         for i in range(3) :
-            num = Label(right, text=str(i + 2 + i * 1), font=("Local baseball park", 40), borderwidth = 3, relief="solid")
+            num = Label(right, text=str(i + 2 + i * 1), font=("Local baseball park", 40), borderwidth = 3, relief="solid",bg= 'white')
             num.pack(side=TOP, padx=20, pady=20, ipadx=35, ipady=20)
             floor_num[2 * i + 1] = num
         line.place(x=800, y=479, width=300, height=3)
@@ -133,7 +142,7 @@ class PageOne(Frame):
         def start_thread(threads):
             threads[0].start()
             threads[1].start()
-        
+
         # end of main program
         Button(self,text='Start',font=(20) ,width=20,command=lambda: start_thread(threads)).pack()
         
@@ -153,6 +162,22 @@ class PageTwo(Frame):
 
         label = Label(self, text="THANK YOU", font=("Verdana", 60),bg='orange')
         label.pack(padx=10,pady=200)
+
+def set_music(music_file, volume=0.8):
+    """
+    stream music with mixer.music module in blocking manner
+    this will stream the sound from disk while playing
+    """
+    # set up the mixer
+    freq = 44100     # audio CD quality
+    bitsize = -16    # unsigned 16 bit
+    channels = 2     # 1 is mono, 2 is stereo
+    buffer = 2048    # number of samples (experiment for good sound)
+    a = pg.mixer
+    a.init(freq, bitsize, channels, buffer)
+    a.music.set_volume(volume)
+    a.music.load(music_file)
+    return a
 
 app = app()
 app.mainloop()
