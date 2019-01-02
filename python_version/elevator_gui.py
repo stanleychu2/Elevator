@@ -1,6 +1,5 @@
 from elevator import *
 from PIL import Image, ImageTk
-from functools import partial
 import pygame as pg
 
 class app(Tk):
